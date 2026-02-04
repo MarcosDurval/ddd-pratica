@@ -1,6 +1,6 @@
 # Desafio Full Cycle - DDD: Order Repository e Testes
 
-Implementacao do Order Repository seguindo os principios de Domain-Driven Design (DDD), com testes unitarios e de integracao.
+Implementacao do Order Repository seguindo os principios de Domain-Driven Design (DDD), com testes unitarios e de integração.
 
 ## Pre-requisitos
 
