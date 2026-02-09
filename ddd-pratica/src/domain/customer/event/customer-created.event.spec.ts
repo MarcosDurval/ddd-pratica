@@ -1,7 +1,7 @@
 import EventDispatcher from "../../@shared/event/event-dispatcher";
 import CustomerCreatedEvent from "./customer-created.event";
 import SendConsoleLogWhenCustomerIsCreatedHandler from "./handler/send-console-log-when-customer-is-created.handler";
-import SendEmailCustomerIsCreated from "./handler/send-email-customer-is-created.handler";
+import SendEmailCustomerIsCreatedHandler from "./handler/send-email-customer-is-created.handler";
 
 describe("Domain events tests", () => {
   it("Should create a customer created event", () => {
@@ -19,7 +19,7 @@ describe("Domain events tests", () => {
   it("Should notify customer created event", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendConsoleLogWhenCustomerIsCreatedHandler();
-    const eventHandler2 = new SendEmailCustomerIsCreated();
+    const eventHandler2 = new SendEmailCustomerIsCreatedHandler();
     const spyEventHandler = jest.spyOn(eventHandler, "handler");
     const spyEventHandler2 = jest.spyOn(eventHandler2, "handler");
 
@@ -43,7 +43,7 @@ describe("Domain events tests", () => {
   it("Should unregister an event handler", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendConsoleLogWhenCustomerIsCreatedHandler();
-    const eventHandler2 = new SendEmailCustomerIsCreated();
+    const eventHandler2 = new SendEmailCustomerIsCreatedHandler();
 
     eventDispatcher.register("CustomerCreatedEvent", eventHandler);
     eventDispatcher.register("CustomerCreatedEvent", eventHandler2);
@@ -61,7 +61,7 @@ describe("Domain events tests", () => {
   it("Should unregister all event handlers", () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendConsoleLogWhenCustomerIsCreatedHandler();
-    const eventHandler2 = new SendEmailCustomerIsCreated();
+    const eventHandler2 = new SendEmailCustomerIsCreatedHandler();
 
     eventDispatcher.register("CustomerCreatedEvent", eventHandler);
     eventDispatcher.register("CustomerCreatedEvent", eventHandler2);

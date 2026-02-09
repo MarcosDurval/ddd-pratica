@@ -3,7 +3,7 @@ import Order from "../../../../domain/checkout/entity/order";
 import OrderItem from "../../../../domain/checkout/entity/order_item";
 import OrderItemModel from "./order-item.model";
 import OrderModel from "./order.model";
-import OrderRepository from "./order.repostiory";
+import OrderRepository from "./order.repository";
 import CustomerModel from "../../../customer/repository/sequelize/customer.model";
 import Product from "../../../../domain/product/entity/product";
 import ProductModel from "../../../product/repository/sequelize/product.model";
