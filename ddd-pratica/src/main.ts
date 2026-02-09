@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import Address from "./domain/entity/address";
-import Customer from "./domain/entity/customer";
-import Order from "./domain/entity/order";
-import OrderItem from "./domain/entity/order_item";
+import Address from "./domain/customer/entity/value-object/address";
+import Customer from "./domain/customer/entity/customer";
+import Order from "./domain/checkout/entity/order";
+import OrderItem from "./domain/checkout/entity/order_item";
 
 const customer = new Customer("c1", "Customer 1");
 const address = new Address("Street 1", "46", "12345-678", "City 1");

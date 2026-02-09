@@ -1,6 +1,0 @@
-import type RepositoryInterface from "./reposity-interface";
-import type Product from "../entity/product";
-
-export default interface ProductRepositoryInterface extends RepositoryInterface<Product> {
-  
-}
