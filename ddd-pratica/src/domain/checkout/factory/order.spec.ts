@@ -1,6 +1,6 @@
 import OrderFactory from "./order";
 
-describe("", () => {
+describe("Factory Order", () => {
   it("Should create an order", () => {
     const orderProps = {
       customerId: "123",
