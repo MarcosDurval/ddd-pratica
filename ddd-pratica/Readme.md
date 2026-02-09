@@ -1,136 +1,130 @@
-# Desafio Full Cycle - DDD: Domain-Driven Design na Prática
+# DDD: Domain-Driven Design na Prática
 
-Projeto com dois desafios de Domain-Driven Design (DDD) implementados em TypeScript, organizados por agregados seguindo os princípios de DDD.
+Projeto de Domain-Driven Design (DDD) implementado em TypeScript, organizado por agregados (Customer, Product, Checkout) com Domain Events, Factories, Services e Repositories.
 
 ---
 
-## 📋 Desafios
+## Desafios Implementados
 
-### Desafio 1: Order Repository e Testes
+### 1. Order Repository
 
-Implementação do Order Repository seguindo os princípios de Domain-Driven Design (DDD), com testes unitários e de integração utilizando Sequelize + SQLite.
+Implementação do Order Repository com operações CRUD completas, seguindo DDD com testes de integração utilizando Sequelize + SQLite.
 
-### Desafio 2: Domain Events para o agregado de Customer
+### 2. Domain Events - Customer
 
-Implementação de dois Eventos de Domínio para o agregado de Customer:
+Implementação de Eventos de Domínio para o agregado de Customer:
 
-#### Evento 1: CustomerCreated
+**CustomerCreatedEvent** — disparado quando um novo Customer é criado. Handlers:
 
-Disparado quando um novo Customer é criado. Possui dois handlers:
+- `SendConsoleLogWhenCustomerIsCreatedHandler`: Exibe `"Esse é o primeiro console.log do evento: CustomerCreated"`
+- `SendEmailCustomerIsCreatedHandler`: Exibe `"Esse é o segundo console.log do evento: CustomerCreated"`
 
-- **SendConsoleLogWhenCustomerIsCreatedHandler**: Exibe `"Esse é o primeiro console.log do evento: CustomerCreated"`
-- **SendEmailCustomerIsCreated**: Exibe `"Esse é o segundo console.log do evento: CustomerCreated"`
+**CustomerAddressChangedEvent** — disparado quando o endereço é alterado via `changeAddress()`. Dados do evento: ID, Nome e Endereço.
 
-#### Evento 2: CustomerChangesAddress
+- `SendEmailWhenAddressChangeHandler`: Exibe `"Endereço do cliente: {id}, {nome} alterado para: {endereco}"`
 
-Disparado quando o endereço do Customer é alterado através do método `changeAddress()`. Os dados do evento incluem ID, Nome e Endereço do cliente.
-
-- **SendEmailWhenAddressChangeHandler**: Exibe `"Endereço do cliente: {id}, {nome} alterado para: {endereco}"`
-
-#### Testes
+### Testes
 
 Todos os eventos e handlers possuem testes que garantem:
-- Registro correto dos handlers no EventDispatcher
-- Notificação dos handlers ao disparar o evento CustomerCreated
-- Notificação do handler ao disparar o evento CustomerChangesAddress
+- Registro e remoção de handlers no EventDispatcher
+- Notificação dos handlers ao disparar CustomerCreatedEvent
+- Notificação do handler ao disparar CustomerAddressChangedEvent
 
 ---
 
-## 🏗️ Estrutura do Projeto
-
-O projeto está organizado por agregados seguindo DDD:
+## Estrutura do Projeto
 
 ```
 src/
-├── domain/                          # Camada de Domínio
-│   ├── @shared/                     # Recursos compartilhados entre agregados
-│   │   ├── event/                   # Sistema de eventos de domínio
-│   │   │   ├── event-dispatcher.ts
+├── domain/                              # Camada de Domínio
+│   ├── @shared/                         # Recursos compartilhados
+│   │   ├── event/
+│   │   │   ├── event.interface.ts
 │   │   │   ├── event-dispatcher.interface.ts
-│   │   │   ├── event-handler.interface.ts
-│   │   │   └── event.interface.ts
-│   │   └── repository/              # Interface base de repositório
+│   │   │   ├── event-dispatcher.ts
+│   │   │   ├── event-dispatcher.spec.ts
+│   │   │   └── event-handler.interface.ts
+│   │   └── repository/
 │   │       └── repository-interface.ts
 │   │
-│   ├── customer/                    # Agregado de Customer
-│   │   ├── entity/                  # Entidades
+│   ├── customer/                        # Agregado Customer
+│   │   ├── entity/
 │   │   │   ├── customer.ts
 │   │   │   ├── customer.spec.ts
-│   │   │   └── value-object/        # Value Objects
+│   │   │   └── value-object/
 │   │   │       └── address.ts
-│   │   ├── event/                   # Eventos de domínio
+│   │   ├── event/
 │   │   │   ├── customer-created.event.ts
-│   │   │   ├── customer-changes-address.event.ts
-│   │   │   ├── customer-event.spec.ts
-│   │   │   └── handler/             # Event Handlers
+│   │   │   ├── customer-created.event.spec.ts
+│   │   │   ├── customer-address-changed.event.ts
+│   │   │   ├── customer-address-changed.spec.ts
+│   │   │   └── handler/
 │   │   │       ├── send-console-log-when-customer-is-created.handler.ts
 │   │   │       ├── send-email-customer-is-created.handler.ts
 │   │   │       └── send-email-when-address-change.handler.ts
-│   │   ├── factory/                 # Factory Pattern
+│   │   ├── factory/
 │   │   │   ├── customer.ts
+│   │   │   ├── customer.spec.ts
 │   │   │   └── customer.interface.ts
-│   │   └── repository/              # Interface do repositório
+│   │   └── repository/
 │   │       └── customer.repository.interface.ts
 │   │
-│   ├── product/                     # Agregado de Product
-│   │   ├── entity/                  # Entidades
+│   ├── product/                         # Agregado Product
+│   │   ├── entity/
 │   │   │   ├── product.ts
 │   │   │   ├── product.spec.ts
 │   │   │   ├── product.interface.ts
 │   │   │   └── productB.ts
-│   │   ├── event/                   # Eventos de domínio
+│   │   ├── event/
 │   │   │   ├── product-created.event.ts
 │   │   │   └── handler/
 │   │   │       └── send-email-when-product-is-created.handler.ts
-│   │   ├── factory/                 # Factory Pattern
+│   │   ├── factory/
 │   │   │   ├── product.ts
 │   │   │   └── product.spec.ts
-│   │   ├── service/                 # Serviços de domínio
+│   │   ├── service/
 │   │   │   ├── product.ts
 │   │   │   └── product.service.spec.ts
-│   │   └── repository/              # Interface do repositório
+│   │   └── repository/
 │   │       └── product-repository.interface.ts
 │   │
-│   └── checkout/                    # Agregado de Order (Checkout)
-│       ├── entity/                  # Entidades
+│   └── checkout/                        # Agregado Order
+│       ├── entity/
 │       │   ├── order.ts
 │       │   ├── order.spec.ts
 │       │   ├── order_item.ts
 │       │   └── order_item.spec.ts
-│       ├── factory/                 # Factory Pattern
+│       ├── factory/
 │       │   ├── order.ts
 │       │   └── order.spec.ts
-│       ├── service/                 # Serviços de domínio
+│       ├── service/
 │       │   ├── order.ts
 │       │   └── order.spec.ts
-│       └── repository/              # Interface do repositório
+│       └── repository/
 │           └── order.repository.interface.ts
 │
-└── infrastructure/                  # Camada de Infraestrutura
-    ├── customer/                    # Implementação de persistência
-    │   └── repository/
-    │       └── sequelize/
-    │           ├── customer.model.ts
-    │           ├── customer.repository.ts
-    │           └── customer.repository.spec.ts
+└── infrastructure/                      # Camada de Infraestrutura
+    ├── customer/
+    │   └── repository/sequelize/
+    │       ├── customer.model.ts
+    │       ├── customer.repository.ts
+    │       └── customer.repository.spec.ts
     ├── product/
-    │   └── repository/
-    │       └── sequelize/
-    │           ├── product.model.ts
-    │           ├── product.repository.ts
-    │           └── product.repository.spec.ts
+    │   └── repository/sequelize/
+    │       ├── product.model.ts
+    │       ├── product.repository.ts
+    │       └── product.repository.spec.ts
     └── order/
-        └── repository/
-            └── sequelize/
-                ├── order.model.ts
-                ├── order-item.model.ts
-                ├── order.repository.ts
-                └── order.repository.spec.ts
+        └── repository/sequelize/
+            ├── order.model.ts
+            ├── order-item.model.ts
+            ├── order.repository.ts
+            └── order.repository.spec.ts
 ```
 
 ---
 
-## 🚀 Como executar
+## Como executar
 
 ### Pré-requisitos
 
@@ -145,11 +139,11 @@ docker run --rm desafio-fullcycle-ddd
 
 ---
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 - **TypeScript** - Linguagem de programação
 - **Jest** - Framework de testes
 - **Sequelize** - ORM para persistência
-- **SQLite** - Banco de dados
+- **SQLite** - Banco de dados em memória
 - **SWC** - Compilador TypeScript
 - **Docker** - Containerização
